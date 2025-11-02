@@ -18,6 +18,11 @@ export default function Home() {
     setInputTask("");
   }
 
+  function deleteTask(id: number) {
+    const filteredTasks = tasks.filter((task) => task.id !== id);
+    setTasks(filteredTasks);
+  }
+
   return (
     <>
       <Title text="My Tasks" />
@@ -68,7 +73,11 @@ export default function Home() {
                     </button>
                   </td> */}
                     <td>
-                      <button type="button" className="btn btn-warning">
+                      <button
+                        type="button"
+                        onClick={() => deleteTask(task.id)}
+                        className="btn btn-warning"
+                      >
                         Delete
                       </button>
                     </td>
