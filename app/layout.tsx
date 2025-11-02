@@ -20,10 +20,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" data-theme="forest">
       <body className={`${notoSans.variable} antialiased`}>
         <Navbar />
-        {children}
+        <main className="w-11/12 md:w-5/10 mx-auto">{children}</main>
       </body>
     </html>
   );
