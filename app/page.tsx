@@ -82,7 +82,14 @@ export default function Home() {
                   (task) =>
                     !task.done && (
                       <tr key={task.id}>
-                        <td onClick={() => toggleCompleteStatus(task)}>⭕️</td>
+                        <td onClick={() => toggleCompleteStatus(task)}>
+                          <button
+                            type="button"
+                            className="btn btn-outline btn-success"
+                          >
+                            🟢
+                          </button>
+                        </td>
                         <td>{task.name}</td>
                         <td>
                           <button
@@ -109,7 +116,7 @@ export default function Home() {
               {/* head */}
               <thead>
                 <tr>
-                  <th>Done</th>
+                  <th>Todo</th>
                   <th>Task</th>
                   <th>Delete</th>
                 </tr>
@@ -119,13 +126,20 @@ export default function Home() {
                   (task) =>
                     task.done && (
                       <tr key={task.id}>
-                        <td onClick={() => toggleCompleteStatus(task)}>⭕️</td>
+                        <td onClick={() => toggleCompleteStatus(task)}>
+                          <button
+                            type="button"
+                            className="btn btn-outline btn-info"
+                          >
+                            🔵
+                          </button>
+                        </td>
                         <td className="line-through">{task.name}</td>
                         <td>
                           <button
                             type="button"
                             onClick={() => deleteTask(task.id)}
-                            className="btn btn-warning"
+                            className="btn btn-out btn-warning"
                           >
                             Delete
                           </button>
