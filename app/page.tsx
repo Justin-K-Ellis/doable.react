@@ -1,18 +1,21 @@
 "use client";
 
 import { useState } from "react";
+import { ITask } from "@/types";
 import Title from "./components/Title";
 
 export default function Home() {
-  const [tasks, setTasks] = useState<string[]>([
-    "Add test tasks",
-    "Add a second task",
-  ]);
+  const [tasks, setTasks] = useState<ITask[]>([]);
   const [inputTask, setInputTask] = useState("");
 
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
-    setTasks((tasks) => tasks.concat(inputTask));
+    const newTask: ITask = {
+      id: Math.floor(Math.random() * 1000),
+      name: inputTask,
+    };
+    setTasks((tasks) => tasks.concat(newTask));
+    setInputTask("");
   }
 
   return (
@@ -57,8 +60,8 @@ export default function Home() {
               </thead>
               <tbody>
                 {tasks.map((task) => (
-                  <tr key={task}>
-                    <td>{task}</td>
+                  <tr key={task.id}>
+                    <td>{task.name}</td>
                     {/* <td>
                     <button type="button" className="btn btn-info">
                       Update
