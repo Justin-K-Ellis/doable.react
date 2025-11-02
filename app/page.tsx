@@ -7,12 +7,14 @@ import Title from "./components/Title";
 export default function Home() {
   const [tasks, setTasks] = useState<ITask[]>([]);
   const [inputTask, setInputTask] = useState("");
+  // const [doneTasks, setDoneTasks] = useState<ITask[]>([]);
 
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     const newTask: ITask = {
       id: Math.floor(Math.random() * 1000),
       name: inputTask,
+      done: false,
     };
     setTasks((tasks) => tasks.concat(newTask));
     setInputTask("");
@@ -21,6 +23,18 @@ export default function Home() {
   function deleteTask(id: number) {
     const filteredTasks = tasks.filter((task) => task.id !== id);
     setTasks(filteredTasks);
+  }
+
+  function toggleCompleteStatus(taskToUpdate: ITask) {
+    const updatedTasks: ITask[] = tasks.map((task) => {
+      if (task.id === taskToUpdate.id) {
+        task.done = !task.done;
+        return task;
+      } else {
+        return task;
+      }
+    });
+    setTasks(updatedTasks);
   }
 
   return (
@@ -51,38 +65,87 @@ export default function Home() {
           </form>
         </section>
 
-        {/* Display tasks */}
-        <section id="tasks">
+        {/* Display todo tasks */}
+        <section id="todo-tasks">
           <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-200">
+            <h2 className="text-center font-bold text-xl">Todos</h2>
             <table className="table">
               {/* head */}
               <thead>
                 <tr>
+                  <th>Done</th>
                   <th>Task</th>
                   {/* <th>Update</th> */}
                   <th>Delete</th>
                 </tr>
               </thead>
               <tbody>
-                {tasks.map((task) => (
-                  <tr key={task.id}>
-                    <td>{task.name}</td>
-                    {/* <td>
+                {tasks.map(
+                  (task) =>
+                    !task.done && (
+                      <tr key={task.id}>
+                        <td onClick={() => toggleCompleteStatus(task)}>⭕️</td>
+                        <td>{task.name}</td>
+                        {/* <td>
                     <button type="button" className="btn btn-info">
                       Update
                     </button>
                   </td> */}
-                    <td>
-                      <button
-                        type="button"
-                        onClick={() => deleteTask(task.id)}
-                        className="btn btn-warning"
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+                        <td>
+                          <button
+                            type="button"
+                            onClick={() => deleteTask(task.id)}
+                            className="btn btn-warning"
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    )
+                )}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        {/* Display done tasks */}
+        <section id="done-tasks" className="mt-6">
+          <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-200">
+            <h2 className="text-center font-bold text-xl">Done</h2>
+            <table className="table">
+              {/* head */}
+              <thead>
+                <tr>
+                  <th>Done</th>
+                  <th>Task</th>
+                  {/* <th>Update</th> */}
+                  <th>Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                {tasks.map(
+                  (task) =>
+                    task.done && (
+                      <tr key={task.id}>
+                        <td onClick={() => toggleCompleteStatus(task)}>⭕️</td>
+                        <td className="line-through">{task.name}</td>
+                        {/* <td>
+                    <button type="button" className="btn btn-info">
+                      Update
+                    </button>
+                  </td> */}
+                        <td>
+                          <button
+                            type="button"
+                            onClick={() => deleteTask(task.id)}
+                            className="btn btn-warning"
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    )
+                )}
               </tbody>
             </table>
           </div>
