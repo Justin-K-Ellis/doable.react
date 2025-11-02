@@ -20,8 +20,14 @@ export default function Home() {
   }
 
   function deleteTask(id: number) {
-    const filteredTasks = tasks.filter((task) => task.id !== id);
-    setTasks(filteredTasks);
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this task?"
+    );
+    if (confirmed) {
+      const filteredTasks = tasks.filter((task) => task.id !== id);
+      setTasks(filteredTasks);
+    }
+    return;
   }
 
   function toggleCompleteStatus(taskToUpdate: ITask) {
