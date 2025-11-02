@@ -7,7 +7,6 @@ import Title from "./components/Title";
 export default function Home() {
   const [tasks, setTasks] = useState<ITask[]>([]);
   const [inputTask, setInputTask] = useState("");
-  // const [doneTasks, setDoneTasks] = useState<ITask[]>([]);
 
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
@@ -75,7 +74,6 @@ export default function Home() {
                 <tr>
                   <th>Done</th>
                   <th>Task</th>
-                  {/* <th>Update</th> */}
                   <th>Delete</th>
                 </tr>
               </thead>
@@ -86,11 +84,6 @@ export default function Home() {
                       <tr key={task.id}>
                         <td onClick={() => toggleCompleteStatus(task)}>⭕️</td>
                         <td>{task.name}</td>
-                        {/* <td>
-                    <button type="button" className="btn btn-info">
-                      Update
-                    </button>
-                  </td> */}
                         <td>
                           <button
                             type="button"
@@ -118,7 +111,6 @@ export default function Home() {
                 <tr>
                   <th>Done</th>
                   <th>Task</th>
-                  {/* <th>Update</th> */}
                   <th>Delete</th>
                 </tr>
               </thead>
@@ -129,11 +121,6 @@ export default function Home() {
                       <tr key={task.id}>
                         <td onClick={() => toggleCompleteStatus(task)}>⭕️</td>
                         <td className="line-through">{task.name}</td>
-                        {/* <td>
-                    <button type="button" className="btn btn-info">
-                      Update
-                    </button>
-                  </td> */}
                         <td>
                           <button
                             type="button"
