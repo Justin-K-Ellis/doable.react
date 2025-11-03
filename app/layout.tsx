@@ -2,7 +2,17 @@ import type { Metadata } from "next";
 import { Noto_Sans } from "next/font/google";
 import "./globals.css";
 
+import {
+  ClerkProvider,
+  // SignInButton,
+  // SignUpButton,
+  SignedIn,
+  SignedOut,
+  // UserButton,
+} from "@clerk/nextjs";
+
 import Navbar from "./components/Navbar";
+import LoginOrSignUp from "./components/LoginOrSignUp";
 
 const notoSans = Noto_Sans({
   variable: "--font-noto-sans",
@@ -20,13 +30,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="silk">
-      <body className={`${notoSans.variable} antialiased bg-base-300 h-screen`}>
-        <Navbar />
-        <main className="w-11/12 md:w-6/10 mx-auto bg-base-100 h-full p-2">
-          {children}
-        </main>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en" data-theme="silk">
+        <body
+          className={`${notoSans.variable} antialiased bg-base-300 h-screen`}
+        >
+          <Navbar />
+          <main className="w-11/12 md:w-6/10 mx-auto bg-base-100 h-full p-2">
+            <SignedIn>{children}</SignedIn>
+            <SignedOut>
+              <section
+                id="login-signup-card"
+                className="flex justify-center items-center mt-20"
+              >
+                <LoginOrSignUp />
+              </section>
+            </SignedOut>
+          </main>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
