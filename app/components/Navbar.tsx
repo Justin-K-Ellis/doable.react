@@ -15,11 +15,11 @@ export default function Navbar() {
       <div className="navbar-end gap-2">
         <SignedOut>
           <SignUpButton>
-            <button className="btn btn-primary">Sign up</button>
+            <button className="btn btn-outline btn-primary">Sign up</button>
           </SignUpButton>
           <p>or</p>
           <SignInButton>
-            <button className="btn btn-primary">Login</button>
+            <button className="btn btn-outline btn-primary">Login</button>
           </SignInButton>
         </SignedOut>
         <SignedIn>

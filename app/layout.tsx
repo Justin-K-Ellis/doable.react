@@ -6,12 +6,13 @@ import {
   ClerkProvider,
   // SignInButton,
   // SignUpButton,
-  // SignedIn,
-  // SignedOut,
+  SignedIn,
+  SignedOut,
   // UserButton,
 } from "@clerk/nextjs";
 
 import Navbar from "./components/Navbar";
+import LoginOrSignUp from "./components/LoginOrSignUp";
 
 const notoSans = Noto_Sans({
   variable: "--font-noto-sans",
@@ -36,7 +37,15 @@ export default function RootLayout({
         >
           <Navbar />
           <main className="w-11/12 md:w-6/10 mx-auto bg-base-100 h-full p-2">
-            {children}
+            <SignedIn>{children}</SignedIn>
+            <SignedOut>
+              <section
+                id="login-signup-card"
+                className="flex justify-center items-center mt-20"
+              >
+                <LoginOrSignUp />
+              </section>
+            </SignedOut>
           </main>
         </body>
       </html>
