@@ -4,7 +4,7 @@ interface TaskListProps {
   cssId: string;
   title: string;
   tasks: ITask[];
-  statusChoice: "Done" | "Todo";
+  statusChoice: boolean;
   toggleCompleteStatus: (task: ITask) => void;
   deleteTask: (id: number) => void;
 }
@@ -18,7 +18,7 @@ export default function TaskList(props: TaskListProps) {
           {/* head */}
           <thead>
             <tr>
-              <th>{props.statusChoice}</th>
+              <th>{props.statusChoice ? "Done" : "Todo"}</th>
               <th>Task</th>
               <th>Delete</th>
             </tr>
@@ -26,7 +26,7 @@ export default function TaskList(props: TaskListProps) {
           <tbody>
             {props.tasks.map(
               (task) =>
-                !task.done && (
+                task.done === props.statusChoice && (
                   <tr key={task.id}>
                     <td onClick={() => props.toggleCompleteStatus(task)}>
                       <button
