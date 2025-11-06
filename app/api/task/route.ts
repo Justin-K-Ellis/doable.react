@@ -25,7 +25,7 @@ export async function GET() {
   } catch (error) {
     console.error(error);
     return NextResponse.json(
-      { message: "Somethign went wrong when fetching all tasks." },
+      { message: "Something went wrong when fetching all tasks." },
       { status: 500 }
     );
   }
