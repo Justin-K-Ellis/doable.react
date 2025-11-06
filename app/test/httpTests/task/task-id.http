@@ -1,0 +1,17 @@
+@baseUrl = http://localhost:3000/api/task
+
+get {{baseUrl}}/816
+
+###
+
+put {{baseUrl}}/80
+
+{
+    "name": "Pet Mouchan",
+    "done": true
+}
+
+# {
+#     "name": "Pet Mouchan",
+#     "done": true
+#   },
