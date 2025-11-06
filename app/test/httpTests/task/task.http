@@ -7,7 +7,8 @@ get {{baseUrl}}
 post {{baseUrl}}
 
 {
-    "name": "Pet Mouchan"
+    "name": "Pet Mouchan",
+    "description": "He's a good kitty."
 }
 
 ###

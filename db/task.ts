@@ -6,7 +6,7 @@ class Tasks {
 
   // == Create ==
   async create(name: string, description: string): Promise<ITask> {
-    const { task } = await pool.query(
+    const task = await pool.query(
       `
         INSERT INTO tasks (name, description)
         VALUES ($1, $2)
@@ -14,13 +14,15 @@ class Tasks {
         `,
       [name, description]
     );
-    return task;
+    return task.rows;
   }
 
   // == Read All ==
   async findMany(): Promise<ITask[]> {
-    const { tasks } = await pool.query(`SELECT * FROM tasks;`);
-    return tasks;
+    const tasks = await pool.query(`SELECT * FROM tasks;`);
+    console.log("(in Task model) all tasks:", tasks);
+
+    return tasks.rows;
   }
 
   // == Read by Id ==
@@ -32,7 +34,7 @@ class Tasks {
         `,
       [id]
     );
-    return task;
+    return task.rows;
   }
 
   // == Update done status by Id ==
@@ -46,7 +48,7 @@ class Tasks {
         `,
       [done, id]
     );
-    return task;
+    return task.rows;
   }
 
   // == Delete ==
