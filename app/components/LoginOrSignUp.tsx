@@ -1,5 +1,4 @@
 import { SignInButton, SignUpButton } from "@clerk/nextjs";
-
 import Title from "./Title";
 
 export default function LoginOrSignUp() {
