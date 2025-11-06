@@ -50,6 +50,15 @@ class Tasks {
   }
 
   // == Delete ==
+  async delete(id: number): Promise<void> {
+    await pool.query(
+      `
+        DELETE FROM tasks
+            WHERE tasks.id = $1
+        `,
+      [id]
+    );
+  }
 }
 
 const tasks = new Tasks();
