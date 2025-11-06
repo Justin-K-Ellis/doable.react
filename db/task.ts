@@ -24,7 +24,19 @@ class Tasks {
     return task;
   }
 
-  // == Update by Id ==
+  // == Update done status by Id ==
+  async updateDoneStatus(id: number, done: boolean): Promise<ITask> {
+    const task: ITask = await pool.query(
+      `
+        UPDATE tasks
+            SET tasks.done = $1
+            WHERE tasks.id = $2
+            RETURNING tasks.id, tasks.name, tasks.done, tasks.description
+        `,
+      [done, id]
+    );
+    return task;
+  }
 
   // == Delete ==
 }
