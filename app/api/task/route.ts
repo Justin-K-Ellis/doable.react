@@ -21,8 +21,6 @@ export async function POST(req: NextRequest) {
 export async function GET() {
   try {
     const allTasks = await tasks.findMany();
-    console.log("all tasks:", allTasks);
-
     return NextResponse.json(allTasks);
   } catch (error) {
     console.error(error);
