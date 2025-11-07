@@ -7,13 +7,6 @@ get {{baseUrl}}
 post {{baseUrl}}
 
 {
-    "name": "Pet Mouchan",
-    "description": "He's a good kitty."
-}
-
-###
-post {{baseUrl}}
-
-{
-    "name": "Learn Next gud"
+    "name": "Read Clerk docs",
+    "description": "It's always best to read the docs."
 }
