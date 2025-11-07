@@ -1,8 +1,9 @@
 import type { ITask } from "@/types";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface IFetchTasks {
   tasks: ITask[];
+  setTasks: React.Dispatch<React.SetStateAction<ITask[]>>;
   isError: boolean;
   loading: boolean;
 }
@@ -33,5 +34,5 @@ export default function useFetchTasks(): IFetchTasks {
     fetchTasks();
   }, []);
 
-  return { tasks, isError, loading };
+  return { tasks, setTasks, isError, loading };
 }

@@ -6,10 +6,8 @@ import Title from "./components/Title";
 import useFetchTasks from "./hooks/useFetchTasks";
 
 export default function Home() {
-  const [tasks, setTasks] = useState<ITask[]>([]);
   const [inputTask, setInputTask] = useState("");
-  const fetchData = useFetchTasks();
-  console.log(fetchData);
+  const { tasks, setTasks, isError, loading } = useFetchTasks();
 
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
@@ -45,6 +43,9 @@ export default function Home() {
     });
     setTasks(updatedTasks);
   }
+
+  if (loading) return <p>Loading...</p>;
+  if (isError) return <p>Something went wrong.</p>;
 
   return (
     <>
