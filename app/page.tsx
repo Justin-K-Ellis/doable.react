@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ITask } from "@/types";
 import Title from "./components/Title";
 import useFetchTasks from "./hooks/useFetchTasks";
@@ -9,17 +9,32 @@ export default function Home() {
   const [inputTask, setInputTask] = useState("");
   const [inputDescription, setInputDescription] = useState("");
   const { tasks, setTasks, isError, loading } = useFetchTasks();
+  const baseUrl = "/api/task";
 
-  function handleSubmit(event: React.FormEvent) {
+  async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
-    const newTask: ITask = {
-      id: Math.floor(Math.random() * 1000),
-      name: inputTask,
-      done: false,
-      description: "",
-    };
-    setTasks((tasks) => tasks.concat(newTask));
-    setInputTask("");
+
+    try {
+      const response = await fetch(baseUrl, {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify({
+          name: inputTask,
+          description: inputDescription,
+        }),
+      });
+      if (response.ok) {
+        const data: ITask = await response.json();
+        setTasks((tasks) => tasks.concat(data));
+      } else {
+        console.error(response);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setInputTask("");
+      setInputDescription("");
+    }
   }
 
   function deleteTask(id: number) {
