@@ -7,6 +7,7 @@ import useFetchTasks from "./hooks/useFetchTasks";
 
 export default function Home() {
   const [inputTask, setInputTask] = useState("");
+  const [inputDescription, setInputDescription] = useState("");
   const { tasks, setTasks, isError, loading } = useFetchTasks();
 
   function handleSubmit(event: React.FormEvent) {
@@ -55,7 +56,7 @@ export default function Home() {
         {/* Add tasks */}
         <section id="tasks-form">
           <form onSubmit={handleSubmit}>
-            <div className="flex flex-col items-center justify-center border border-base-300 rounded my-4 py-4">
+            <div className="flex flex-col items-center justify-center border border-base-300 rounded my-4 py-4 gap-2">
               <label htmlFor="add-task" className="font-bold text-xl">
                 Add Task
               </label>
@@ -67,10 +68,22 @@ export default function Home() {
                   onChange={(e) => setInputTask(e.target.value)}
                   className="input"
                 />
-                <button type="submit" className="btn btn-success">
-                  Add
-                </button>
               </div>
+              <div className="flex flex-col">
+                <label htmlFor="add-description" className="font-bold">
+                  Description
+                </label>
+                <input
+                  type="text"
+                  id="add-description"
+                  className="input"
+                  value={inputDescription}
+                  onChange={(e) => setInputDescription(e.target.value)}
+                />
+              </div>
+              <button type="submit" className="btn btn-success">
+                Add
+              </button>
             </div>
           </form>
         </section>
@@ -101,7 +114,12 @@ export default function Home() {
                             🟢
                           </button>
                         </td>
-                        <td>{task.name}</td>
+                        <td>
+                          <div>
+                            <p>{task.name}</p>
+                            <p className="font-light">{task.description}</p>
+                          </div>
+                        </td>
                         <td>
                           <button
                             type="button"
