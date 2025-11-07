@@ -3,10 +3,13 @@
 import { useState } from "react";
 import { ITask } from "@/types";
 import Title from "./components/Title";
+import useFetchTasks from "./hooks/useFetchTasks";
 
 export default function Home() {
   const [tasks, setTasks] = useState<ITask[]>([]);
   const [inputTask, setInputTask] = useState("");
+  const fetchData = useFetchTasks();
+  console.log(fetchData);
 
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
@@ -14,6 +17,7 @@ export default function Home() {
       id: Math.floor(Math.random() * 1000),
       name: inputTask,
       done: false,
+      description: "",
     };
     setTasks((tasks) => tasks.concat(newTask));
     setInputTask("");
