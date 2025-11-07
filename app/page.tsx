@@ -59,16 +59,29 @@ export default function Home() {
     return;
   }
 
-  function toggleCompleteStatus(taskToUpdate: ITask) {
-    const updatedTasks: ITask[] = tasks.map((task) => {
-      if (task.id === taskToUpdate.id) {
-        task.done = !task.done;
-        return task;
+  async function toggleCompleteStatus(taskToUpdate: ITask) {
+    try {
+      const response = await fetch(`${baseUrl}/${taskToUpdate.id}`, {
+        method: "PUT",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify({ done: !taskToUpdate.done }),
+      });
+      if (response.ok) {
+        const updatedTasks: ITask[] = tasks.map((task) => {
+          if (task.id === taskToUpdate.id) {
+            task.done = !task.done;
+            return task;
+          } else {
+            return task;
+          }
+        });
+        setTasks(updatedTasks);
       } else {
-        return task;
+        console.error(response);
       }
-    });
-    setTasks(updatedTasks);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   if (loading) return <p>Loading...</p>;
