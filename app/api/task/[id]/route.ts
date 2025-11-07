@@ -35,3 +35,29 @@ export async function PUT(
     );
   }
 }
+
+// == Delete task by id ==
+export async function DELETE(
+  _req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
+  try {
+    const task = await tasks.findById(parseInt(id));
+    if (task) {
+      await tasks.delete(parseInt(id));
+      return NextResponse.json({ status: 204 });
+    } else {
+      return NextResponse.json(
+        { message: "Task does not exist." },
+        { status: 404 }
+      );
+    }
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json(
+      { message: "Something went wrong when deleting this task." },
+      { status: 500 }
+    );
+  }
+}

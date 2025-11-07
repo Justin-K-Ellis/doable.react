@@ -4,9 +4,12 @@ get {{baseUrl}}/10
 
 ###
 
-put {{baseUrl}}/709
+put {{baseUrl}}/1
 
 {
-    "name": "Pet Mouchan",
     "done": true
 }
+
+###
+
+delete {{baseUrl}}/5

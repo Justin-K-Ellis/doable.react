@@ -54,7 +54,7 @@ class Tasks {
     await pool.query(
       `
         DELETE FROM tasks
-            WHERE tasks.id = $1
+            WHERE id = $1
         `,
       [id]
     );
