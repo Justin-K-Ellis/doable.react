@@ -40,9 +40,9 @@ class Tasks {
     const task = await pool.query(
       `
         UPDATE tasks
-            SET tasks.done = $1
-            WHERE tasks.id = $2
-            RETURNING tasks.id, tasks.name, tasks.done, tasks.description
+            SET done = $1
+            WHERE id = $2
+            RETURNING id, name, done, description
         `,
       [done, id]
     );
