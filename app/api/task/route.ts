@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-// import type { ITask } from "@/types";
 import tasks from "@/db/task";
 
 // == Create ==
@@ -7,7 +6,7 @@ export async function POST(req: NextRequest) {
   try {
     const { name, description } = await req.json();
     const newTask = await tasks.create(name, description);
-    return NextResponse.json(newTask);
+    return NextResponse.json(newTask, { status: 201 });
   } catch (error) {
     console.error(error);
     return NextResponse.json(
