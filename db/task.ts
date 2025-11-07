@@ -20,26 +20,24 @@ class Tasks {
   // == Read All ==
   async findMany(): Promise<ITask[]> {
     const tasks = await pool.query(`SELECT * FROM tasks;`);
-    console.log("(in Task model) all tasks:", tasks);
-
     return tasks.rows;
   }
 
   // == Read by Id ==
   async findById(id: number): Promise<ITask> {
-    const { task } = await pool.query(
+    const task = await pool.query(
       `
         SELECT * FROM tasks
         WHERE tasks.id = $1
         `,
       [id]
     );
-    return task.rows;
+    return task.rows[0];
   }
 
   // == Update done status by Id ==
   async updateDoneStatus(id: number, done: boolean): Promise<ITask> {
-    const { task } = await pool.query(
+    const task = await pool.query(
       `
         UPDATE tasks
             SET tasks.done = $1
