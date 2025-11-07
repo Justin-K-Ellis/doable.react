@@ -37,13 +37,24 @@ export default function Home() {
     }
   }
 
-  function deleteTask(id: number) {
+  async function deleteTask(id: number) {
     const confirmed = window.confirm(
       "Are you sure you want to delete this task?"
     );
     if (confirmed) {
-      const filteredTasks = tasks.filter((task) => task.id !== id);
-      setTasks(filteredTasks);
+      try {
+        const response = await fetch(`${baseUrl}/${id}`, {
+          method: "DELETE",
+        });
+        if (response.ok) {
+          const filteredTasks = tasks.filter((task) => task.id !== id);
+          setTasks(filteredTasks);
+        } else {
+          console.error(response);
+        }
+      } catch (error) {
+        console.error(error);
+      }
     }
     return;
   }
