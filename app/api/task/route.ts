@@ -1,14 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 import { currentUser, auth } from "@clerk/nextjs/server";
 import tasks from "@/db/task";
+import unauthMsg from "@/app/lib/unAuthMsg";
 
 // == Create ==
 export async function POST(req: NextRequest) {
   const { isAuthenticated } = await auth();
   if (!isAuthenticated) {
-    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    return NextResponse.json(unauthMsg.msg, unauthMsg.status);
   }
   const user = await currentUser();
+  if (user === null) {
+    return NextResponse.json(unauthMsg.msg, unauthMsg.status);
+  }
 
   try {
     const { name, description } = await req.json();
@@ -27,10 +31,14 @@ export async function POST(req: NextRequest) {
 export async function GET() {
   const { isAuthenticated } = await auth();
   if (!isAuthenticated) {
-    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    return NextResponse.json(unauthMsg.msg, unauthMsg.status);
   }
 
   const user = await currentUser();
+
+  if (user === null) {
+    return NextResponse.json(unauthMsg.msg, unauthMsg.status);
+  }
 
   try {
     const allTasks = await tasks.findMany(user.id);
