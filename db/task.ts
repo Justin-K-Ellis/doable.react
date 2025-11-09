@@ -5,21 +5,31 @@ class Tasks {
   constructor() {}
 
   // == Create ==
-  async create(name: string, description: string): Promise<ITask> {
+  async create(
+    name: string,
+    description: string,
+    clerkId: string
+  ): Promise<ITask> {
     const task = await pool.query(
       `
-        INSERT INTO tasks (name, description)
-        VALUES ($1, $2)
+        INSERT INTO tasks (name, description, clerk_id)
+        VALUES ($1, $2, $3)
         RETURNING tasks.id, tasks.name, tasks.done, tasks.description
         `,
-      [name, description]
+      [name, description, clerkId]
     );
     return task.rows;
   }
 
   // == Read All ==
-  async findMany(): Promise<ITask[]> {
-    const tasks = await pool.query(`SELECT * FROM tasks;`);
+  async findMany(clerkId: string): Promise<ITask[]> {
+    const tasks = await pool.query(
+      `
+        SELECT * FROM tasks
+        WHERE clerk_id = $1;
+        `,
+      [clerkId]
+    );
     return tasks.rows;
   }
 

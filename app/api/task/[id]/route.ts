@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server.js";
+import { currentUser, auth } from "@clerk/nextjs/server";
 import tasks from "@/db/task";
 
 // == Get task by id ==
