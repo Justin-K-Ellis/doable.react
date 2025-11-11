@@ -46,15 +46,19 @@ class Tasks {
   }
 
   // == Update done status by Id ==
-  async updateDoneStatus(id: number, done: boolean): Promise<ITask> {
+  async updateDoneStatus(
+    id: number,
+    done: boolean,
+    clerkId: string
+  ): Promise<ITask> {
     const task = await pool.query(
       `
         UPDATE tasks
             SET done = $1
-            WHERE id = $2
+            WHERE id = $2 AND clerk_id = $3
             RETURNING id, name, done, description
         `,
-      [done, id]
+      [done, id, clerkId]
     );
     return task.rows;
   }

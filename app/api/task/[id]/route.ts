@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server.js";
 import { currentUser, auth } from "@clerk/nextjs/server";
+import unauthMsg from "@/app/lib/unAuthMsg";
 import tasks from "@/db/task";
 
 // == Get task by id ==
@@ -25,8 +26,22 @@ export async function PUT(
   const { id } = await params;
   const { done } = await req.json();
 
+  // Check user auth
+  const { isAuthenticated } = await auth();
+  if (!isAuthenticated) {
+    return NextResponse.json(unauthMsg.msg, unauthMsg.status);
+  }
+  const user = await currentUser();
+  if (user === null) {
+    return NextResponse.json(unauthMsg.msg, unauthMsg.status);
+  }
+
   try {
-    const updatedTask = await tasks.updateDoneStatus(parseInt(id), done);
+    const updatedTask = await tasks.updateDoneStatus(
+      parseInt(id),
+      done,
+      user.id
+    );
     return NextResponse.json(updatedTask);
   } catch (error) {
     console.error(error);
