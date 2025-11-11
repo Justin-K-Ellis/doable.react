@@ -64,13 +64,13 @@ class Tasks {
   }
 
   // == Delete ==
-  async delete(id: number): Promise<void> {
+  async delete(id: number, clerkId: string): Promise<void> {
     await pool.query(
       `
         DELETE FROM tasks
-            WHERE id = $1
+            WHERE id = $1 AND clerk_id = $2
         `,
-      [id]
+      [id, clerkId]
     );
   }
 }

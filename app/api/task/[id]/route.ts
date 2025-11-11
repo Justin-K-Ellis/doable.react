@@ -58,10 +58,21 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
+
+  // Check user auth
+  const { isAuthenticated } = await auth();
+  if (!isAuthenticated) {
+    return NextResponse.json(unauthMsg.msg, unauthMsg.status);
+  }
+  const user = await currentUser();
+  if (user === null) {
+    return NextResponse.json(unauthMsg.msg, unauthMsg.status);
+  }
+
   try {
     const task = await tasks.findById(parseInt(id));
     if (task) {
-      await tasks.delete(parseInt(id));
+      await tasks.delete(parseInt(id), user.id);
       return NextResponse.json({ status: 204 });
     } else {
       return NextResponse.json(
