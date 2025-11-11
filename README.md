@@ -10,4 +10,4 @@ Google and LINE accounts to create and manage tasks.
 - React (Next.js)
 - Tailwind and daisyUI for styling
 - Clerk (user auth)
-- PosgreSQL
+- PostgreSQL
