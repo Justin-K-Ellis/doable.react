@@ -17,7 +17,7 @@ async function main() {
   console.log("Create tasks table");
   try {
     const client = new Client({
-      connectionString: `postgresql://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PW}@localhost:5432/${process.env.POSTGRES_DB}`,
+      connectionString: process.env.DB_CONNECTION_STR,
     });
     await client.connect();
     await client.query(createTasksTable);
